@@ -1,11 +1,9 @@
 import gradio as gr
 from config import config
 from chat_interface import chat_interface
+from parameters import parameters
+from config import config
 
-
-with gr.Blocks() as parameters:
-    with gr.Row():
-        gr.Dropdown(label="Model")
 
 demo = gr.TabbedInterface([chat_interface, parameters], ["Chat", "Parameters"])
 
