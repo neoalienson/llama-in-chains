@@ -1,0 +1,4 @@
+# Default configuration
+# Please use environment variables to override
+
+ollama_url: !ENV ${OLLAMA_URL:http://localhost:11434/api/}
