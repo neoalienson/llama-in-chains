@@ -1,11 +1,10 @@
 import json
 import gradio as gr
 from config import config
-import parameters
-import prompts
+import ui.parameters
+import data.prompts as prompts
 import ollama_lib
-
-models = ollama_lib.list_models()
+import data.models as models
 
 def new_prompt_template(choice, tb):
     return gr.Textbox(value=choice, autofocus=True, autoscroll=True)
@@ -16,7 +15,7 @@ chatbot = gr.Chatbot(show_copy_button=True, layout="panel")
 
 with gr.Blocks() as chat_interface:
     with gr.Row():
-        dropdown = gr.Dropdown(label="Model", choices=models)
+        dropdown = gr.Dropdown(label="Model", choices=models.models)
         # select the first item as default model
         dropdown.value = "llama3:instruct"
 

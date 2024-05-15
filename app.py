@@ -1,11 +1,10 @@
 import gradio as gr
 from config import config
-from chat_interface import chat_interface
-from parameters import parameters
+import ui.chat_interface 
+import ui.parameters
 from config import config
 
-
-demo = gr.TabbedInterface([chat_interface, parameters], ["Chat", "Parameters"])
+demo = gr.TabbedInterface([ui.chat_interface.chat_interface, ui.parameters.parameters], ["Chat", "Parameters"])
 
 if __name__ == "__main__":
     demo.launch()
