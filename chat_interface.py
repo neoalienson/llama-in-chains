@@ -1,3 +1,8 @@
+import requests
+import json
+import gradio as gr
+from config import config
+
 def generate_response(prompt, history, model):
     data = {"model": model, "stream": False, "prompt": prompt}
 

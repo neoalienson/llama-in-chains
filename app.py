@@ -1,3 +1,5 @@
+import gradio as gr
+from config import config
 from chat_interface import chat_interface
 
 
