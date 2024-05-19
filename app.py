@@ -14,7 +14,7 @@ def load_data():
         gr.Dropdown(label="Model", choices=data.models, allow_custom_value=False)]
 
 with gr.Blocks() as demo:
-    gr.TabbedInterface([tabs.chat_interface.chat_interface, tabs.model_info.parameters], ["Chat", "Parameters"])
+    gr.TabbedInterface([tabs.chat_interface.chat_interface, tabs.model_info.parameters], ["Chat", "Model details"])
     demo.load(fn=load_data, inputs=None, outputs=[ui.mi_models, ui.ci_models])
 
 if __name__ == "__main__":
