@@ -9,14 +9,13 @@ def model_changed(input):
 
 with gr.Blocks() as parameters:
     with gr.Column():
-        ui.pa_models = gr.Dropdown(label="Model")
-#        ui.pa_models.select(fn=model_changed, inputs=ui.pa_models, outputs=ui.ci_models)
+        ui.mi_models = gr.Dropdown(label="Model")
         with gr.Accordion("Model Details"):
-            ui.pa_model_details = gr.Markdown(label="Model Details")
+            ui.mi_model_details = gr.Markdown(label="Model Details")
         with gr.Accordion("Model File"):           
-            ui.pa_modelfile = gr.Markdown(label="Model File")
+            ui.mi_modelfile = gr.Markdown(label="Model File")
         with gr.Accordion("Template"):
-            ui.pa_template = gr.Markdown(label="Template")
+            ui.mi_template = gr.Markdown(label="Template")
         with gr.Accordion("Parameters"):
-            ui.pa_parameters = gr.Markdown(label="Parameters")
+            ui.mi_parameters = gr.Markdown(label="Parameters")
 

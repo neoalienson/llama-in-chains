@@ -43,11 +43,11 @@ with gr.Blocks() as chat_interface:
         # select the first item as default model
         ui.ci_models.value = "llama3:instruct"
         ui.ci_models.select(fn=model_changed, inputs=ui.ci_models, outputs=[
-            ui.pa_models,
-            ui.pa_model_details,
-            ui.pa_modelfile,
-            ui.pa_template,
-            ui.pa_parameters
+            ui.mi_models,
+            ui.mi_model_details,
+            ui.mi_modelfile,
+            ui.mi_template,
+            ui.mi_parameters
             ])
 
         quick_prompt = gr.Radio(
