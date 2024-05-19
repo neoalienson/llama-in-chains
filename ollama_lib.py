@@ -2,6 +2,21 @@ import requests
 from config import config
 import json
 
+def model_details(model_name):
+    data = {"name": model_name}
+
+    response = requests.post(
+        config.ollama_url + "show",
+        headers={"Content-Type": "application/json", "Connection": "close"},
+        data=json.dumps(data),
+    )
+
+    if response.status_code == 200:
+        bot_message = json.loads(response.text)
+        return bot_message
+    else:
+        print("Error: generate response:", response.status_code, response.text)
+
 def generate_response(prompt, history, model):
     data = {"model": model, "stream": False, "prompt": prompt}
 
