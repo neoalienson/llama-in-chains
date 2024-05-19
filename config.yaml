@@ -2,3 +2,4 @@
 # Please use environment variables to override
 
 ollama_url: !ENV ${OLLAMA_URL:http://localhost:11434/api/}
+gradio_server_name: !ENV ${GRADIO_SERVER_NAME:127.0.0.1}
