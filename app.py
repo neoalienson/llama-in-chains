@@ -7,4 +7,4 @@ from config import config
 demo = gr.TabbedInterface([ui.chat_interface.chat_interface, ui.parameters.parameters], ["Chat", "Parameters"])
 
 if __name__ == "__main__":
-    demo.launch(server_name=config.gradio_server_name)
+    demo.launch(server_name=config.gradio_server_name, server_port=int(config.gradio_server_port),blocked_paths=config.blocked_paths)
