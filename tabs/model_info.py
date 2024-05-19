@@ -7,7 +7,7 @@ def model_changed(input):
     print("B")    
     return gr.Dropdown(label="Model", choices=data.models, value=input)
 
-with gr.Blocks() as parameters:
+with gr.Blocks() as model_info:
     with gr.Column():
         ui.mi_models = gr.Dropdown(label="Model")
         with gr.Accordion("Model Details"):

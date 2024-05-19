@@ -1,6 +1,7 @@
 import gradio as gr
 from config import config
 import tabs.model_info
+import tabs.game
 import tabs.chat_interface 
 from config import config
 import ollama_lib
@@ -14,7 +15,7 @@ def load_data():
         gr.Dropdown(label="Model", choices=data.models, allow_custom_value=False)]
 
 with gr.Blocks() as demo:
-    gr.TabbedInterface([tabs.chat_interface.chat_interface, tabs.model_info.parameters], ["Chat", "Model details"])
+    gr.TabbedInterface([tabs.chat_interface.chat_interface, tabs.model_info.model_info, tabs.game.game], ["Chat", "Model details", "Game"])
     demo.load(fn=load_data, inputs=None, outputs=[ui.mi_models, ui.ci_models])
 
 if __name__ == "__main__":
