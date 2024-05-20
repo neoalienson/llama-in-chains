@@ -1,22 +1,30 @@
 import gradio as gr
+import json
 from config import config
-import tabs.model_info
-import tabs.game
-import tabs.chat_interface 
+import ui.model_info
+import ui.game
+import ui.models
+import ui.chat_interface
 from config import config
 import ollama_lib
 import data
-import ui
 
 def load_data():
     data.models = ollama_lib.list_models()
-    return [
-        gr.Dropdown(label="Model", choices=data.models, value="llama3:instruct"),
-        gr.Dropdown(label="Model", choices=data.models, allow_custom_value=False)]
+    selected = None
+    if config.default_model:
+        selected = config.default_model
+    return gr.Dropdown(label="Model", choices=data.models, value=selected)
+
+(model_info, model_details, model_file, model_template, model_parameters) = ui.model_info.create_model_info()
+ci = ui.chat_interface.create_chatinterface()
+game = ui.game.create_game()
 
 with gr.Blocks() as demo:
-    gr.TabbedInterface([tabs.chat_interface.chat_interface, tabs.model_info.model_info, tabs.game.game], ["Chat", "Model details", "Game"])
-    demo.load(fn=load_data, inputs=None, outputs=[ui.mi_models, ui.ci_models])
+    with gr.Row():
+        gr.TabbedInterface([ci, model_info, game], ["Chat", "Model details", "Game"])
+    models = ui.models.create_models(model_details, model_file, model_template, model_parameters)
+    demo.load(fn=load_data, outputs=models)
 
 if __name__ == "__main__":
     demo.launch(server_name=config.gradio_server_name, server_port=int(config.gradio_server_port),blocked_paths=config.blocked_paths)
