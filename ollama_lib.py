@@ -1,6 +1,7 @@
 import requests
 from config import config
 import json
+import shared
 
 def model_details(model_name):
     data = {"name": model_name}
@@ -17,7 +18,10 @@ def model_details(model_name):
     else:
         print("Error: generate response:", response.status_code, response.text)
 
-def generate_response(prompt, history, model):
+def generate_response(prompt, history, model = None):
+    if model is None:
+        model = shared.selected_model
+
     data = {"model": model, "stream": False, "prompt": prompt}
 
     response = requests.post(
@@ -34,7 +38,10 @@ def generate_response(prompt, history, model):
         print("Error: generate response:", response.status_code, response.text)
 
 
-def generate_chat_response(prompt, history, model):
+def generate_chat_response(prompt, history, model= None):
+    if model is None:
+        model = shared.selected_model
+
     messages = []
     for u, a in history:
         messages.append({"role": "user", "content": u})

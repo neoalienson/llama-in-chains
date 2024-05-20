@@ -15,19 +15,20 @@ def load_data():
     selected = None
     if config.default_model:
         selected = config.default_model
-    return [gr.Textbox(value=selected), gr.Dropdown(label="Model", choices=data.models, value=selected)]
+    
+    shared.selected_model = selected
 
-shared.selected_model = gr.Textbox(visible=False)
+    return gr.Dropdown(label="Model", choices=data.models, value=selected)
 
 (model_info, model_details, model_file, model_template, model_parameters) = ui.model_info.create_model_info()
-ci = ui.chat_interface.create_chatinterface(shared.selected_model)
+ci = ui.chat_interface.create_chatinterface()
 game = ui.game.create_game()
 
 with gr.Blocks() as demo:
     with gr.Row():
         gr.TabbedInterface([ci, model_info, game], ["Chat", "Model details", "Game"])
     model_list = ui.dropdown_models.create_models(model_details, model_file, model_template, model_parameters)
-    demo.load(fn=load_data, outputs=[shared.selected_model, model_list])
+    demo.load(fn=load_data, outputs=model_list)
 
 if __name__ == "__main__":
     demo.launch(server_name=config.gradio_server_name, server_port=int(config.gradio_server_port),blocked_paths=config.blocked_paths)

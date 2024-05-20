@@ -4,6 +4,8 @@ import ollama_lib
 import shared
 
 def model_changed(input):
+    shared.selected_model = input
+    
     response = ollama_lib.model_details(input)
     details = json.dumps(response, indent=4, separators=(',', ': '))
     details = f"```\n{details}\n```"
@@ -19,7 +21,7 @@ def model_changed(input):
     if 'template' in template:        
         template = response['template']
 
-    return [gr.Textbox(value=input, visible=False),
+    return [
             gr.Markdown(label="Model Details", value=details),
             gr.Markdown(label="Model File", value=f"```\n{modelfile}\n```"),
             gr.Markdown(label="Template", value=f"```\n{template}\n```"),
@@ -30,7 +32,7 @@ def create_models(model_details, model_file, model_template, model_parameters):
     with gr.Blocks():
         models = gr.Dropdown(label="Model", allow_custom_value=True)
         models.select(fn=model_changed, inputs=models, outputs=[
-                shared.selected_model, model_details, model_file, model_template, model_parameters
+                model_details, model_file, model_template, model_parameters
             ])
     return models
 
