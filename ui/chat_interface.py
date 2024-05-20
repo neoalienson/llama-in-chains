@@ -7,7 +7,7 @@ def new_prompt_template(choice, tb):
     return gr.Textbox(value=choice, autofocus=True, autoscroll=True)
 
 
-def create_chatinterface():
+def create_chatinterface(selected_model):
     textbox = gr.Textbox(elem_id="input_box", lines=3, min_width=800)
     chatbot = gr.Chatbot(show_copy_button=True, layout="panel")
     with gr.Blocks() as chatinterface:
@@ -20,7 +20,7 @@ def create_chatinterface():
         with gr.Column():
             gr.ChatInterface(
                 fn=ollama_lib.generate_chat_response,
-                # additional_inputs=[models],
+                additional_inputs=[selected_model],
                 textbox=textbox,
                 chatbot=chatbot,
             )
