@@ -4,8 +4,7 @@ import data.prompts as prompts
 import ollama_lib
 
 def new_prompt_template(choice, tb):
-    return gr.Textbox(value=choice, autofocus=True, autoscroll=True)
-
+    return choice
 
 def create_chatinterface():
     textbox = gr.Textbox(elem_id="input_box", lines=3, min_width=800)

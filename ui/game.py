@@ -13,8 +13,8 @@ def start_new_game():
     (game, prompt) = data.games.games_list[0]
     response = ollama_lib.generate_chat_response(prompt=prompt, model=shared.selected_model)
     game_instruction = response
-    return [gr.Markdown(value=response),
-            gr.Slider(label="Progress", value=0),
+    return [response,
+            0,
             # clean up chat history
             []
             ]

@@ -22,10 +22,10 @@ def model_changed(input):
         template = response['template']
 
     return [
-            gr.Markdown(label="Model Details", value=details),
-            gr.Markdown(label="Model File", value=f"```\n{modelfile}\n```"),
-            gr.Markdown(label="Template", value=f"```\n{template}\n```"),
-            gr.Markdown(label="Model Parameterts", value=f"```\n{parameters}\n```"),
+            details,
+            f"```\n{modelfile}\n```",
+            f"```\n{template}\n```",
+            f"```\n{parameters}\n```",
             ]
 
 def create_models(model_details, model_file, model_template, model_parameters):
