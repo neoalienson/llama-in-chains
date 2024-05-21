@@ -4,6 +4,7 @@ import data
 import ollama_lib
 import data.games
 import shared
+import re
 
 game_instruction = None
 
@@ -55,6 +56,18 @@ def create_game():
                     clear_btn=None,
                 )
         nem_game.click(fn=start_new_game, outputs=[instruction, slider_progress, chat_interface.chatbot_state])
+        @gr.on(triggers=[chatbot.change], inputs=[chatbot], outputs=[slider_progress])
+        def update_slider(chatbot):
+            progress = 0
+            text = ""
+            pattern = r"Progress:[\* ]*(\d+)"
+            if len(chatbot) > 0:
+                if len(chatbot[-1]) > 0:
+                    if chatbot[-1][-1]:
+                        text = chatbot[-1][-1]
 
-
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                progress = int(match.group(1))
+            return[progress]
     return game
