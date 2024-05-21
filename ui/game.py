@@ -13,7 +13,11 @@ def start_new_game():
     (game, prompt) = data.games.games_list[0]
     response = ollama_lib.generate_chat_response(prompt=prompt, model=shared.selected_model)
     game_instruction = response
-    return gr.Markdown(value=response)
+    return [gr.Markdown(value=response),
+            gr.Slider(label="Progress", value=0),
+            # clean up chat history
+            []
+            ]
 
 
 def take_action(prompt, history = None, model = None):
@@ -25,25 +29,32 @@ def take_action(prompt, history = None, model = None):
     if len(history) > 0:
         starting.extend(history)
 
+
     return ollama_lib.generate_chat_response(prompt, history=starting)
 
 def create_game():
+    slider_progress = None
+
     textbox = gr.Textbox(elem_id="input_box", lines=3, min_width=800)
-    chatbot = gr.Chatbot(show_copy_button=True, layout="panel")    
+    chatbot = gr.Chatbot(show_copy_button=True, layout="panel")
+    submit_btn = gr.Button(value="Submit")
     with gr.Blocks() as game:
         with gr.Row():
             with gr.Column():
-                nem_game = gr.Button(value='New Game')
+                nem_game = gr.ClearButton(value='New Game', components = [chatbot])
                 instruction = gr.Markdown()
-                nem_game.click(fn=start_new_game, outputs=instruction)
+                slider_progress = gr.Slider(label="Progress", value=0)
             with gr.Column():
-                gr.ChatInterface(
+                chat_interface = gr.ChatInterface(
                     fn=take_action,
                     textbox=textbox,
                     chatbot=chatbot,
+                    submit_btn=submit_btn,
                     retry_btn=None,
                     undo_btn=None,
                     clear_btn=None,
                 )
+        nem_game.click(fn=start_new_game, outputs=[instruction, slider_progress, chat_interface.chatbot_state])
+
 
     return game
