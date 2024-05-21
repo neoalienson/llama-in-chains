@@ -18,7 +18,7 @@ def model_details(model_name):
     else:
         print("Error: generate response:", response.status_code, response.text)
 
-def generate_response(prompt, history, model = None):
+def generate_response(prompt, history = None, model = None):
     if model is None:
         model = shared.selected_model
 
@@ -38,14 +38,15 @@ def generate_response(prompt, history, model = None):
         print("Error: generate response:", response.status_code, response.text)
 
 
-def generate_chat_response(prompt, history, model= None):
+def generate_chat_response(prompt, history = None, model= None):
     if model is None:
         model = shared.selected_model
 
     messages = []
-    for u, a in history:
-        messages.append({"role": "user", "content": u})
-        messages.append({"role": "assistant", "content": a})
+    if history:
+        for u, a in history:
+            messages.append({"role": "user", "content": u})
+            messages.append({"role": "assistant", "content": a})
     messages.append({"role": "user", "content": prompt})
 
     data = {"model": model, "stream": False, "messages": messages}
