@@ -25,6 +25,7 @@ ci = ui.chat_interface.create_chatinterface()
 game = ui.game.create_game()
 
 with gr.Blocks() as demo:
+    gr.Markdown(value="# Llama in Chains")
     with gr.Row():
         gr.TabbedInterface([ci, model_info, game], ["Chat", "Model details", "Game"])
     model_list = ui.dropdown_models.create_models(model_details, model_file, model_template, model_parameters)
