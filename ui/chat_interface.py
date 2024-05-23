@@ -1,10 +1,22 @@
 import gradio as gr
 from config import config
 import data.prompts as prompts
-import ollama_lib
+import ollama
+import shared
 
 def new_prompt_template(choice, tb):
     return choice
+
+def run(prompt, history = None):
+    messages = []
+    if history:
+        for u, a in history:
+            messages.append({"role": "user", "content": u})
+            messages.append({"role": "assistant", "content": a})
+    messages.append({"role": "user", "content": prompt})
+    
+    response = ollama.chat(model=shared.selected_model, messages=messages, stream=False)
+    return response['message']['content']
 
 def create_chatinterface():
     textbox = gr.Textbox(elem_id="input_box", lines=3, min_width=800)
@@ -18,7 +30,7 @@ def create_chatinterface():
         
         with gr.Column():
             gr.ChatInterface(
-                fn=ollama_lib.generate_chat_response,
+                fn=run,
                 textbox=textbox,
                 chatbot=chatbot,
             )

@@ -1,7 +1,7 @@
 import gradio as gr
 from config import config
 import data
-import ollama_lib
+import ollama
 import data.games
 import shared
 import re
@@ -12,7 +12,9 @@ def start_new_game():
     global game_instruction
 
     (game, prompt) = data.games.games_list[0]
-    response = ollama_lib.generate_chat_response(prompt=prompt, model=shared.selected_model)
+    messages = [{"role": "user", "content": prompt}]
+    response = ollama.chat(messages=messages, model=shared.selected_model, stream = False)
+    response = response['message']['content']
     game_instruction = response
     return [response,
             0,
@@ -26,12 +28,16 @@ def take_action(prompt, history = None, model = None):
 
     (game, game_prompt) = data.games.games_list[0]
 
-    starting = [(game_prompt, game_instruction)]
-    if len(history) > 0:
-        starting.extend(history)
+    messages = [{"role": "user", "content": game_prompt}, 
+                {"role": "assistant", "content": game_instruction}] 
+    if history:
+        for u, a in history:
+            messages.append({"role": "user", "content": u})
+            messages.append({"role": "assistant", "content": a})
+    messages.append({"role": "user", "content": prompt})
 
-
-    return ollama_lib.generate_chat_response(prompt, history=starting)
+    response =  ollama.chat(messages=messages, model=shared.selected_model, stream = False)
+    return response['message']['content']
 
 def create_game():
     slider_progress = None

@@ -1,13 +1,14 @@
 import json
 import gradio as gr
-import ollama_lib
+import ollama
 import shared
 
 def model_changed(input):
     shared.selected_model = input
     
-    response = ollama_lib.model_details(input)
+    response = ollama.show(input)
     details = json.dumps(response, indent=4, separators=(',', ': '))
+
     details = f"```\n{details}\n```"
 
     modelfile = ''
@@ -16,9 +17,9 @@ def model_changed(input):
     
     if 'modelfile' in response:
         modelfile = response['modelfile']
-    if 'parameters' in parameters:
+    if 'parameters' in response:
         parameters = response['parameters']
-    if 'template' in template:        
+    if 'template' in response:        
         template = response['template']
 
     return [

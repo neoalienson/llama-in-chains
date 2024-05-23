@@ -6,12 +6,14 @@ import ui.game
 import ui.dropdown_models
 import ui.chat_interface
 from config import config
-import ollama_lib
 import data
 import shared
+import ollama
 
 def load_data():
-    data.models = ollama_lib.list_models()
+    response = ollama.list()
+
+    data.models = [item['name'] for item in response['models']]
     selected = None
     if config.default_model:
         selected = config.default_model
