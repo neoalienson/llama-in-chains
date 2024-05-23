@@ -15,8 +15,12 @@ def run(prompt, history = None):
             messages.append({"role": "assistant", "content": a})
     messages.append({"role": "user", "content": prompt})
     
-    response = ollama.chat(model=shared.selected_model, messages=messages, stream=False)
-    return response['message']['content']
+    partial_message = ''
+
+    for chunk in ollama.chat(model=shared.selected_model, messages=messages, stream=True):
+        new_token = (chunk['message']['content'])
+        partial_message += new_token
+        yield partial_message
 
 def create_chatinterface():
     textbox = gr.Textbox(elem_id="input_box", lines=3, min_width=800)

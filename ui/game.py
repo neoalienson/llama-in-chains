@@ -36,8 +36,12 @@ def take_action(prompt, history = None, model = None):
             messages.append({"role": "assistant", "content": a})
     messages.append({"role": "user", "content": prompt})
 
-    response =  ollama.chat(messages=messages, model=shared.selected_model, stream = False)
-    return response['message']['content']
+    partial_message = ''
+
+    for chunk in ollama.chat(messages=messages, model=shared.selected_model, stream = True):
+        new_token = (chunk['message']['content'])
+        partial_message += new_token
+        yield partial_message
 
 def create_game():
     slider_progress = None
