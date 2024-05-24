@@ -2,6 +2,7 @@
 # Please use environment variables to override
 
 default_model:
+default_embedding_model:
 ollama_url: !ENV ${OLLAMA_URL:http://localhost:11434/api/}
 gradio_server_name: !ENV ${GRADIO_SERVER_NAME:127.0.0.1}
 gradio_server_port: !ENV ${GRADIO_SERVER_PORT:7860}
