@@ -17,6 +17,7 @@ def load_data():
     selected = None
     if config.default_model:
         selected = config.default_model
+    shared.selected_model = selected
 
     selected_embedding = None
     if config.default_embedding_model:

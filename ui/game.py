@@ -53,7 +53,7 @@ def create_game():
         with gr.Row():
             with gr.Column():
                 nem_game = gr.ClearButton(value='New Game', components = [chatbot])
-                instruction = gr.Markdown()
+                instruction = gr.Markdown(value='Click New Game to begin.')
                 slider_progress = gr.Slider(label="Progress", value=0)
             with gr.Column():
                 chat_interface = gr.ChatInterface(

@@ -31,7 +31,7 @@ def model_changed(input):
 
 def create_models(model_details = None, model_file = None, model_template = None, model_parameters = None):
     with gr.Blocks():
-        models = gr.Dropdown(allow_custom_value=True)
+        models = gr.Dropdown(allow_custom_value=True, interactive=True)
         if model_details:
             models.select(fn=model_changed, inputs=models, outputs=[
                     model_details, model_file, model_template, model_parameters
