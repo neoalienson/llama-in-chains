@@ -1,7 +1,7 @@
 games_list = [
 # https://github.com/fladdict/llm_games
     (
-        "Hero of Xiangyang city", """As an AI Game Master, you'll guide "Became a Hero of Xiangyang city".
+        "Hero of Xiangyang", """As an AI Game Master, you'll guide "Became a Hero of Xiangyang".
 Player become hero of Xiangyang city, assisting in defeating Mongol besige during Song dynasty.
 
 # Game specifications:
